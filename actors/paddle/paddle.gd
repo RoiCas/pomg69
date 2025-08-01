@@ -7,7 +7,7 @@ extends CharacterBody2D
 @export_category("VARS")
 ##UNIDADES / SEG
 @export_range(1.0, 20.0, 0.1, "or_greater", "suffix:U/S") var _speed : float = 13.5
-
+@export_range(0.01, 1.0, 0.01, "or_greater", "suffix:secs") var _accel_secs : float = 0.12
 
 @onready var _init_pos : Vector2 = self.global_position
 
@@ -18,8 +18,8 @@ func _ready() -> void:
   GameManager.game_manager.round_start.connect(on_round_start)
 
 
-func move_paddle(move_dir: int, accel_secs: float, delta: float) -> void:
-  velocity.y += (((move_dir * _speed * Common.UNIT_SIZE) - velocity.y) / accel_secs) * delta
+func move_paddle(move_dir: int, delta: float) -> void:
+  velocity.y += (((move_dir * _speed * Common.UNIT_SIZE) - velocity.y) / _accel_secs) * delta
   var collision : KinematicCollision2D = move_and_collide(velocity * delta)
   if(collision != null):
     reset_velocity()
