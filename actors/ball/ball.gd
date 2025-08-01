@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 
 const _INIT_SPEED : float = Common.UNIT_SIZE * 8.5
+const _SPEED_INCREMENT_PERCENT : float = 0.015
 
 #Solo se define una vez. Al inicio
 @onready var _init_pos : Vector2 = self.global_position
@@ -13,15 +14,11 @@ var _move_dir : Vector2 = Vector2():
     _move_dir = val.normalized()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-  if(event.is_action_pressed("ui_accept") == true):
-    _move_dir = Vector2.LEFT
-    reset_speed()
-
-
 func _ready() -> void:
   GameManager.game_manager.round_end.connect(on_round_end)
   GameManager.game_manager.round_start.connect(on_round_start)
+  GameManager.game_manager.game_end.connect(on_game_end)
+  reset_ball()
 
 
 func _physics_process(delta: float) -> void:
@@ -78,17 +75,23 @@ func reposition_ball(paddle_coll: PaddleCollider, hort_bounce_dir: int) -> void:
 
 func bounce_ball(new_dir: Vector2) -> void:
   _move_dir = new_dir
+  _current_speed += _current_speed * _SPEED_INCREMENT_PERCENT
 
 
-func reset_speed() -> void:
+func reset_ball() -> void:
   _current_speed = _INIT_SPEED
+  _move_dir = Vector2.ZERO
+  global_position = _init_pos
 
 
 func on_round_start() -> void:
-  pass
+  visible = true
+  _move_dir = Vector2.LEFT
 
 
 func on_round_end() -> void:
-  reset_speed()
-  _move_dir = Vector2.ZERO
-  global_position = _init_pos
+  reset_ball()
+
+func on_game_end() -> void:
+  reset_ball()
+  visible = false

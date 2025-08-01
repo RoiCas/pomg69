@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://btqdsmexfylpe"]
+
+[ext_resource type="Script" uid="uid://bsuerc41joh86" path="res://interface/score_manager/score_manager.gd" id="1_mxaqr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1nr2e"]
+font_size = 32
+
+[node name="ScoreManager" type="Control" node_paths=PackedStringArray("_player_score_label", "_enemy_score_label")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_mxaqr")
+_player_score_label = NodePath("PlayerScore")
+_enemy_score_label = NodePath("EnemyScore")
+
+[node name="PlayerScore" type="Label" parent="."]
+layout_mode = 0
+offset_left = -104.0
+offset_top = -320.0
+offset_right = -64.0
+offset_bottom = -275.0
+text = "69"
+label_settings = SubResource("LabelSettings_1nr2e")
+
+[node name="EnemyScore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = -320.0
+offset_right = 104.0
+offset_bottom = -275.0
+text = "69"
+label_settings = SubResource("LabelSettings_1nr2e")

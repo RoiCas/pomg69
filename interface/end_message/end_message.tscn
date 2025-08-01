@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwlqlssgprck0"]
+
+[ext_resource type="Script" uid="uid://o2es702ykf7v" path="res://interface/end_message/end_message.gd" id="1_1vqpg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1x7d6"]
+font_size = 64
+
+[node name="EndMessage" type="CenterContainer" node_paths=PackedStringArray("_end_label", "_exit_button", "_replay_button")]
+offset_right = 40.0
+offset_bottom = 40.0
+use_top_left = true
+script = ExtResource("1_1vqpg")
+_end_label = NodePath("VBoxContainer/EndLabel")
+_exit_button = NodePath("VBoxContainer/HBoxContainer/ExitButton")
+_replay_button = NodePath("VBoxContainer/HBoxContainer/ReplayButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="EndLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "ESKIBIDI"
+label_settings = SubResource("LabelSettings_1x7d6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ExitButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "SALIR"
+
+[node name="ReplayButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "OTRA"

@@ -5,7 +5,7 @@ extends StaticBody2D
 const _MAX_PADDLE_SPEED : float = Common.UNIT_SIZE * 6.5
 
 @export_category("REQUIRED")
-@export var _coll_shape : CollisionShape2D = null
+@export var _coll_shape : CollisionShape2D
 
 @export_category("VARS")
 @export var _rect_size : Vector2i = Vector2i(16, 16):

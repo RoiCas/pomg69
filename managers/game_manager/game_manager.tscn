@@ -1,19 +1,25 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhxs207u1q1q6"]
+[gd_scene load_steps=10 format=3 uid="uid://bhxs207u1q1q6"]
 
 [ext_resource type="Script" uid="uid://b2g1ucsuey8ld" path="res://managers/game_manager/game_manager.gd" id="1_lh1k3"]
 [ext_resource type="PackedScene" uid="uid://ccocan3mdcvgc" path="res://actors/player/player.tscn" id="2_dmudu"]
 [ext_resource type="PackedScene" uid="uid://dbfvsn5y6752t" path="res://actors/ball/ball.tscn" id="3_f7s5u"]
 [ext_resource type="PackedScene" uid="uid://d3k2n7a4xgrtu" path="res://scenery/wall/wall.tscn" id="3_xl6yf"]
 [ext_resource type="PackedScene" uid="uid://bww8pnsxl7ov8" path="res://actors/enemy/enemy.tscn" id="4_1nr2e"]
+[ext_resource type="PackedScene" uid="uid://btqdsmexfylpe" path="res://interface/score_manager/score_manager.tscn" id="6_q3g20"]
+[ext_resource type="PackedScene" uid="uid://kltnt0m0xwoa" path="res://interface/round_start_counter/round_start_counter.tscn" id="7_3hdek"]
+[ext_resource type="PackedScene" uid="uid://cwlqlssgprck0" path="res://interface/end_message/end_message.tscn" id="8_qtb8k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7s5u"]
 size = Vector2(1056, 800)
 
-[node name="GameManager" type="Node" node_paths=PackedStringArray("_game_area", "_ball", "_enemy")]
+[node name="GameManager" type="Node" node_paths=PackedStringArray("_game_area", "_ball", "_enemy", "_score_manager", "_round_start_counter", "_end_message")]
 script = ExtResource("1_lh1k3")
 _game_area = NodePath("GameArea")
 _ball = NodePath("Actors/Ball")
 _enemy = NodePath("Actors/Enemy")
+_score_manager = NodePath("ScoreManager")
+_round_start_counter = NodePath("RoundStartCounter")
+_end_message = NodePath("EndMessage")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -45,3 +51,13 @@ position = Vector2(0, -360)
 
 [node name="Wall2" parent="Walls" instance=ExtResource("3_xl6yf")]
 position = Vector2(0, 360)
+
+[node name="ScoreManager" parent="." instance=ExtResource("6_q3g20")]
+_max_score = 1
+
+[node name="RoundStartCounter" parent="." instance=ExtResource("7_3hdek")]
+offset_top = -128.0
+offset_bottom = -88.0
+
+[node name="EndMessage" parent="." instance=ExtResource("8_qtb8k")]
+visible = false

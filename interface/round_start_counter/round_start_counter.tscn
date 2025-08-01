@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://kltnt0m0xwoa"]
+
+[ext_resource type="Script" uid="uid://bdaamqocknvym" path="res://interface/round_start_counter/round_start_counter.gd" id="1_kh0u6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i7yek"]
+font_size = 128
+
+[node name="RoundStartCounter" type="CenterContainer" node_paths=PackedStringArray("_time_label", "_start_timer")]
+offset_right = 40.0
+offset_bottom = 40.0
+use_top_left = true
+script = ExtResource("1_kh0u6")
+_time_label = NodePath("TimeLabel")
+_start_timer = NodePath("StartTimer")
+
+[node name="TimeLabel" type="Label" parent="."]
+layout_mode = 2
+text = "3"
+label_settings = SubResource("LabelSettings_i7yek")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
