@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://x0wirgej2lx8"]
+
+[ext_resource type="Script" uid="uid://djgh5v6jltiko" path="res://actors/paddle/paddle.gd" id="1_qn5d1"]
+[ext_resource type="PackedScene" uid="uid://df0mf2kknlsmr" path="res://actors/paddle/paddle_collider/paddle_collider.tscn" id="2_fyall"]
+
+[node name="Paddle" type="CharacterBody2D" node_paths=PackedStringArray("_paddle_collider")]
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("1_qn5d1")
+_paddle_collider = NodePath("PaddleCollider")
+
+[node name="CollShape" type="CollisionShape2D" parent="."]
+
+[node name="PaddleCollider" parent="." instance=ExtResource("2_fyall")]

@@ -1,0 +1,40 @@
+class_name Paddle
+extends CharacterBody2D
+
+@export_category("REQUIRED")
+@export var _paddle_collider : PaddleCollider = null
+
+@export_category("VARS")
+##UNIDADES / SEG
+@export_range(1.0, 20.0, 0.1, "or_greater", "suffix:U/S") var _speed : float = 13.5
+
+
+@onready var _init_pos : Vector2 = self.global_position
+
+##Override.
+##Se debe hacer super._ready() si se vuelve a implementar.
+func _ready() -> void:
+  GameManager.game_manager.round_end.connect(on_round_end)
+  GameManager.game_manager.round_start.connect(on_round_start)
+
+
+func move_paddle(move_dir: int, accel_secs: float, delta: float) -> void:
+  velocity.y += (((move_dir * _speed * Common.UNIT_SIZE) - velocity.y) / accel_secs) * delta
+  var collision : KinematicCollision2D = move_and_collide(velocity * delta)
+  if(collision != null):
+    reset_velocity()
+
+  _paddle_collider.set_current_speed(velocity.y)
+
+
+func reset_velocity() -> void:
+  velocity = Vector2.ZERO
+
+
+func on_round_start() -> void:
+  pass
+
+
+func on_round_end() -> void:
+  global_position = _init_pos
+  reset_velocity()

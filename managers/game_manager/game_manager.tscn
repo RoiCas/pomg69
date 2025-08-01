@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhxs207u1q1q6"]
+
+[ext_resource type="Script" uid="uid://b2g1ucsuey8ld" path="res://managers/game_manager/game_manager.gd" id="1_lh1k3"]
+[ext_resource type="PackedScene" uid="uid://ccocan3mdcvgc" path="res://actors/player/player.tscn" id="2_dmudu"]
+[ext_resource type="PackedScene" uid="uid://dbfvsn5y6752t" path="res://actors/ball/ball.tscn" id="3_f7s5u"]
+[ext_resource type="PackedScene" uid="uid://d3k2n7a4xgrtu" path="res://scenery/wall/wall.tscn" id="3_xl6yf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7s5u"]
+size = Vector2(1056, 800)
+
+[node name="GameManager" type="Node" node_paths=PackedStringArray("_game_area")]
+script = ExtResource("1_lh1k3")
+_game_area = NodePath("GameArea")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="GameArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+input_pickable = false
+monitorable = false
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea"]
+shape = SubResource("RectangleShape2D_f7s5u")
+debug_color = Color(0.597763, 0, 0.701961, 0)
+
+[node name="Actors" type="Node" parent="."]
+
+[node name="Player" parent="Actors" instance=ExtResource("2_dmudu")]
+position = Vector2(-336, 0)
+
+[node name="Ball" parent="Actors" instance=ExtResource("3_f7s5u")]
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="Wall" parent="Walls" instance=ExtResource("3_xl6yf")]
+position = Vector2(0, -360)
+
+[node name="Wall2" parent="Walls" instance=ExtResource("3_xl6yf")]
+position = Vector2(0, 360)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://df0mf2kknlsmr"]
+
+[ext_resource type="Script" uid="uid://cr63iy5uu04of" path="res://actors/paddle/paddle_collider/paddle_collider.gd" id="1_6hlp0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6hlp0"]
+size = Vector2(16, 16)
+
+[node name="PaddleCollider" type="StaticBody2D" node_paths=PackedStringArray("_coll_shape")]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_6hlp0")
+_coll_shape = NodePath("CollShape")
+
+[node name="CollShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6hlp0")
+debug_color = Color(0.758291, 0.0189792, 0.544719, 0)

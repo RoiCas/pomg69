@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3k2n7a4xgrtu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmudu"]
+size = Vector2(992, 16)
+
+[node name="Wall" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(496, -8, 496, 8, -496, 8, -496, -8)
+closed = true
+width = 3.0
+default_color = Color(0.189392, 0.156738, 0.417969, 1)
+joint_mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dmudu")
+debug_color = Color(0.0627451, 0.0627451, 0.0627451, 0)

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccocan3mdcvgc"]
+
+[ext_resource type="PackedScene" uid="uid://x0wirgej2lx8" path="res://actors/paddle/paddle.tscn" id="1_nvxhs"]
+[ext_resource type="Script" uid="uid://bbd1dm4v2kswv" path="res://actors/player/player.gd" id="2_ilk7j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nvxhs"]
+size = Vector2(16, 64)
+
+[node name="Player" instance=ExtResource("1_nvxhs")]
+script = ExtResource("2_ilk7j")
+
+[node name="Line2D" type="Line2D" parent="." index="0"]
+points = PackedVector2Array(-8, -24, 8, -24, 8, 24, -8, 24)
+closed = true
+width = 3.0
+default_color = Color(0.53309, 0.82497, 0.274544, 1)
+joint_mode = 2
+
+[node name="CollShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_nvxhs")
+debug_color = Color(0.0509804, 0.0509804, 0.0509804, 0)
+
+[node name="PaddleCollider" parent="." index="2"]
+_rect_size = Vector2i(16, 65)
