@@ -53,7 +53,6 @@ position = Vector2(0, -360)
 position = Vector2(0, 360)
 
 [node name="ScoreManager" parent="." instance=ExtResource("6_q3g20")]
-_max_score = 1
 
 [node name="RoundStartCounter" parent="." instance=ExtResource("7_3hdek")]
 offset_top = -128.0

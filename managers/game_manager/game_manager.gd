@@ -5,6 +5,8 @@ signal round_start()
 signal round_end()
 signal game_end()
 
+const GAME_MANAGER_SCN : PackedScene = preload("res://managers/game_manager/game_manager.tscn")
+
 static var game_manager : GameManager = null:
   set(val):
     assert(is_instance_valid(game_manager) == false, "Multiple GameManager!")
@@ -17,6 +19,11 @@ static var game_manager : GameManager = null:
 @export var _score_manager : ScoreManager
 @export var _round_start_counter : RoundStartCounter
 @export var _end_message : EndMessage
+
+
+static func new_game_manager() -> GameManager:
+  var new_game_manager : GameManager = GAME_MANAGER_SCN.instantiate() as GameManager
+  return new_game_manager
 
 
 func _init() -> void:

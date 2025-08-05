@@ -1,7 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbpvc7won5u3n"]
+[gd_scene load_steps=3 format=3 uid="uid://dbpvc7won5u3n"]
 
-[ext_resource type="PackedScene" uid="uid://bhxs207u1q1q6" path="res://managers/game_manager/game_manager.tscn" id="1_s4n6d"]
+[ext_resource type="Script" uid="uid://bkwc1nv7t0owo" path="res://managers/main/main.gd" id="1_sw6gc"]
+[ext_resource type="PackedScene" uid="uid://c4f38anv6uf0n" path="res://interface/start_screen/start_screen.tscn" id="2_sw6gc"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("_start_screen")]
+script = ExtResource("1_sw6gc")
+_start_screen = NodePath("StartScreen")
 
-[node name="GameManager" parent="." instance=ExtResource("1_s4n6d")]
+[node name="StartScreen" parent="." instance=ExtResource("2_sw6gc")]

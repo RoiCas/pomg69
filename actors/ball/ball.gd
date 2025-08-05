@@ -3,12 +3,17 @@ extends CharacterBody2D
 
 
 const _INIT_SPEED : float = Common.UNIT_SIZE * 8.5
-const _SPEED_INCREMENT_PERCENT : float = 0.015
+const _SPEED_INCREMENT_PERCENT : float = 0.068
+
+@export_category("VARS")
+@export_range(1.0, 2.0, 0.1, "suffix:U/Sec") var _max_ball_speed : float = 1.5
 
 #Solo se define una vez. Al inicio
 @onready var _init_pos : Vector2 = self.global_position
 
-var _current_speed : float = 0.0
+var _current_speed : float = 0.0:
+  set(val):
+    _current_speed = clampf(val, _INIT_SPEED, _INIT_SPEED * _max_ball_speed)
 var _move_dir : Vector2 = Vector2():
   set(val):
     _move_dir = val.normalized()
