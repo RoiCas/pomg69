@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://u5j2ew26ciyt"]
+
+[ext_resource type="Script" uid="uid://bi0lx7javw53n" path="res://interface/pause_message/pause_message.gd" id="1_8qh6f"]
+
+[node name="PauseMessage" type="CenterContainer" node_paths=PackedStringArray("_pause_button")]
+offset_right = 40.0
+offset_bottom = 40.0
+use_top_left = true
+script = ExtResource("1_8qh6f")
+_pause_button = NodePath("PauseButton")
+
+[node name="PauseButton" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+focus_mode = 0
+text = "Alto"

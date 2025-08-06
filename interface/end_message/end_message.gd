@@ -2,6 +2,7 @@ class_name EndMessage
 extends CenterContainer
 
 signal restart_request()
+signal exit_request()
 
 enum END_STATE {
   WIN = 0,
@@ -34,7 +35,7 @@ func show_message(state: END_STATE) -> void:
 
 
 func on_exit_pressed() -> void:
-  get_tree().quit()
+  exit_request.emit()
 
 func on_replay_pressed() -> void:
   #TODO: Hacer el restart

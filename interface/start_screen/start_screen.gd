@@ -6,8 +6,8 @@ signal start_game_request()
 const START_SCREEN_SCN : PackedScene = preload("res://interface/start_screen/start_screen.tscn")
 
 static func new_start_screen() -> StartScreen:
-  var new_start_screen : StartScreen = START_SCREEN_SCN.instantiate() as StartScreen
-  return new_start_screen
+  var new_instance : StartScreen = START_SCREEN_SCN.instantiate() as StartScreen
+  return new_instance
 
 @export var _play_button : Button
 

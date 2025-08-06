@@ -19,6 +19,13 @@ func _init() -> void:
 
 func _ready() -> void:
   connect_start_game_request()
+  connect_exit_game_request()
+
+
+func connect_exit_game_request() -> void:
+  var exit_game_request : Signal = _game_manager.exit_game_request
+  if(exit_game_request.is_connected(on_exit_to_title_request) == false):
+    exit_game_request.connect(on_exit_to_title_request)
 
 
 func connect_start_game_request() -> void:
@@ -28,10 +35,11 @@ func connect_start_game_request() -> void:
 
 
 func on_start_game_request() -> void:
-  #TODO
-  pass
+  remove_child(_start_screen)
+  add_child(_game_manager)
+  _game_manager.start_game()
 
 
 func on_exit_to_title_request() -> void:
-  #TODO
-  pass
+  remove_child(_game_manager)
+  add_child(_start_screen)
