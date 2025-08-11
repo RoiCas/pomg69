@@ -38,6 +38,5 @@ func on_exit_pressed() -> void:
   exit_request.emit()
 
 func on_replay_pressed() -> void:
-  #TODO: Hacer el restart
   restart_request.emit()
   visible = false

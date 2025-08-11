@@ -34,22 +34,26 @@ func _init() -> void:
 
 
 func _ready() -> void:
+  connect_signals()
+
+  _enemy.set_target_ball(_ball)
+
+
+func connect_signals() -> void:
   _round_start_counter.count_end.connect(start_round)
   _end_message.exit_request.connect(on_exit_request)
   _pause_menu.exit_request.connect(on_exit_request)
   _pause_menu.continue_request.connect(on_continue_request)
   _pause_message.pause_request.connect(on_pause_request)
+  _end_message.restart_request.connect(on_restart_request)
+  _pause_menu.restart_request.connect(on_restart_request)
+
+  _game_area.body_exited.connect(on_ball_exited)
 
 
 func start_game() -> void:
-  var body_exited_signal : Signal = _game_area.body_exited
-  if(body_exited_signal.is_connected(on_ball_exited) == false):
-    body_exited_signal.connect(on_ball_exited)
-
-  _enemy.set_target_ball(_ball)
-  _score_manager.reset_score()
+  reset_game()
   _round_start_counter.start_counter()
-  _pause_message.show_message()
 
 
 func start_round() -> void:
@@ -70,12 +74,50 @@ func on_continue_request() -> void:
 
 func on_exit_request() -> void:
   _pause_menu.hide_menu()
-  get_tree().paused = false
+  reset_game()
   exit_game_request.emit()
 
 
+func reset_game() -> void:
+  round_end.emit()
+  _score_manager.reset_score()
+  _pause_message.show_message()
+  get_tree().paused = false
+
+
+func on_restart_request() -> void:
+  _pause_menu.hide_menu()
+  round_end.emit()
+  start_game()
+
+
+func show_pause_menu() -> void:
+  _pause_menu.show_menu()
+
+
+func hide_pause_menu() -> void:
+  _pause_menu.hide_menu()
+
+
+func show_pause_message() -> void:
+  _pause_message.show_message()
+
+
+func hide_pause_message() -> void:
+  _pause_message.hide_message()
+
+
+func start_round_counter() -> void:
+  _round_start_counter.start_counter()
+
+
+func end_game() -> void:
+  game_end.emit()
+  _pause_message.hide_message()
+
+
 func on_ball_exited(exited_ball: Ball) -> void:
-  if(is_instance_valid(exited_ball) == false):
+  if(is_instance_valid(exited_ball) == false || _round_start_counter.is_inside_tree() == false):
     return
 
   const DIR_TO_PLAYER : int = -1
@@ -93,8 +135,8 @@ func on_ball_exited(exited_ball: Ball) -> void:
       round_end.emit()
       _round_start_counter.start_counter()
     ScoreManager.WINNER_TYPE.PLAYER:
-      game_end.emit()
+      end_game()
       _end_message.show_message(EndMessage.END_STATE.WIN)
     ScoreManager.WINNER_TYPE.ENEMY:
-      game_end.emit()
+      end_game()
       _end_message.show_message(EndMessage.END_STATE.LOSE)

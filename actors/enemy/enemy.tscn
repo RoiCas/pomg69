@@ -6,10 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r6xaq"]
 size = Vector2(16, 64)
 
-[node name="Enemy" node_paths=PackedStringArray("_check_ball_timer") instance=ExtResource("1_jqx28")]
+[node name="Enemy" instance=ExtResource("1_jqx28")]
 script = ExtResource("2_r6xaq")
-_check_ball_timer = NodePath("CheckBallTimer")
-_check_range = 5
+_check_range = 7
+_speed = 11.0
 
 [node name="Line2D" type="Line2D" parent="." index="0"]
 points = PackedVector2Array(-8, -24, 8, -24, 8, 24, -8, 24)
@@ -24,6 +24,3 @@ debug_color = Color(0.0392157, 0.0392157, 0.0392157, 0)
 
 [node name="PaddleCollider" parent="." index="2"]
 _rect_size = Vector2i(16, 52)
-
-[node name="CheckBallTimer" type="Timer" parent="." index="3"]
-one_shot = true

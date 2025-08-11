@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ca84gbjmk8g3t" path="res://interface/pause_menu/pause_menu.gd" id="1_oncl7"]
 
-[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("_exit_button", "_continue_button")]
+[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("_exit_button", "_restart_button", "_continue_button")]
 script = ExtResource("1_oncl7")
 _exit_button = NodePath("CenterContainer/HBoxContainer/ExitButton")
+_restart_button = NodePath("CenterContainer/HBoxContainer/RestartButton")
 _continue_button = NodePath("CenterContainer/HBoxContainer/ContinueButton")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -23,6 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_constants/separation = 32
 alignment = 1
@@ -32,6 +34,12 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 focus_mode = 0
 text = "Salir"
+
+[node name="RestartButton" type="Button" parent="CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+text = "Otra"
 
 [node name="ContinueButton" type="Button" parent="CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)

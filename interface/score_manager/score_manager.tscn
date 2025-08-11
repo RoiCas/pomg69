@@ -13,6 +13,7 @@ offset_bottom = 40.0
 script = ExtResource("1_mxaqr")
 _player_score_label = NodePath("PlayerScore")
 _enemy_score_label = NodePath("EnemyScore")
+_max_score = 3
 
 [node name="PlayerScore" type="Label" parent="."]
 layout_mode = 0

@@ -33,8 +33,10 @@ alignment = 1
 
 [node name="ExitButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 text = "SALIR"
 
 [node name="ReplayButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 text = "OTRA"
