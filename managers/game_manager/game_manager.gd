@@ -1,10 +1,19 @@
 class_name GameManager
 extends Node
 
-signal exit_game_request()
 signal round_start()
 signal round_end()
 signal game_end()
+signal exit_game_request()
+
+signal start_game_request()
+signal end_game_request()
+signal restart_request()
+signal reset_request()
+signal continue_request()
+signal pause_request()
+signal start_round_request()
+signal ball_exited(winner_type: int)
 
 const GAME_MANAGER_SCN : PackedScene = preload("res://managers/game_manager/game_manager.tscn")
 
@@ -47,56 +56,15 @@ func connect_signals() -> void:
   _pause_message.pause_request.connect(on_pause_request)
   _end_message.restart_request.connect(on_restart_request)
   _pause_menu.restart_request.connect(on_restart_request)
-
   _game_area.body_exited.connect(on_ball_exited)
 
 
 func start_game() -> void:
-  reset_game()
-  _round_start_counter.start_counter()
+  start_game_request.emit()
 
 
 func start_round() -> void:
-  round_start.emit()
-
-
-func on_pause_request() -> void:
-  _pause_message.hide_message()
-  get_tree().paused = true
-  _pause_menu.show_menu()
-
-
-func on_continue_request() -> void:
-  _pause_menu.hide_menu()
-  get_tree().paused = false
-  _pause_message.show_message()
-
-
-func on_exit_request() -> void:
-  _pause_menu.hide_menu()
-  reset_game()
-  exit_game_request.emit()
-
-
-func reset_game() -> void:
-  round_end.emit()
-  _score_manager.reset_score()
-  _pause_message.show_message()
-  get_tree().paused = false
-
-
-func on_restart_request() -> void:
-  _pause_menu.hide_menu()
-  round_end.emit()
-  start_game()
-
-
-func show_pause_menu() -> void:
-  _pause_menu.show_menu()
-
-
-func hide_pause_menu() -> void:
-  _pause_menu.hide_menu()
+  start_round_request.emit()
 
 
 func show_pause_message() -> void:
@@ -107,36 +75,66 @@ func hide_pause_message() -> void:
   _pause_message.hide_message()
 
 
+func show_pause_menu() -> void:
+  _pause_menu.show_menu()
+
+
+func hide_pause_menu() -> void:
+  _pause_menu.hide_menu()
+
+
 func start_round_counter() -> void:
   _round_start_counter.start_counter()
 
 
-func end_game() -> void:
-  game_end.emit()
-  _pause_message.hide_message()
+func on_pause_request() -> void:
+  hide_pause_message()
+  pause_request.emit()
 
 
-func on_ball_exited(exited_ball: Ball) -> void:
-  if(is_instance_valid(exited_ball) == false || _round_start_counter.is_inside_tree() == false):
-    return
+func on_continue_request() -> void:
+  hide_pause_menu()
+  continue_request.emit()
 
-  const DIR_TO_PLAYER : int = -1
-  var exit_dir : int = int(signf(exited_ball.global_position.x))
 
-  if(exit_dir == DIR_TO_PLAYER):
-    #Metió Enemy
-    _score_manager.enemy_scored()
-  else:
-    #Metió Player
-    _score_manager.player_scored()
+func on_exit_request() -> void:
+  hide_pause_menu()
+  reset_game()
+  exit_game_request.emit()
 
-  match _score_manager.get_winner():
-    ScoreManager.WINNER_TYPE.NONE:
-      round_end.emit()
-      _round_start_counter.start_counter()
+
+func reset_game() -> void:
+  round_end.emit()
+  _score_manager.reset_score()
+  reset_request.emit()
+
+
+func on_restart_request() -> void:
+  hide_pause_menu()
+  restart_request.emit()
+
+
+func end_game(winner_type: int) -> void:
+  end_game_request.emit()
+
+  match winner_type:
     ScoreManager.WINNER_TYPE.PLAYER:
-      end_game()
       _end_message.show_message(EndMessage.END_STATE.WIN)
     ScoreManager.WINNER_TYPE.ENEMY:
-      end_game()
       _end_message.show_message(EndMessage.END_STATE.LOSE)
+
+
+func on_ball_exited(ex_ball: Ball) -> void:
+  if(is_instance_valid(ex_ball) == false || _round_start_counter.is_inside_tree() == false):
+    return
+
+  const DIR_TO_PLAYER: int = -1
+  var exit_dir : int = int(signf(ex_ball.global_position.x))
+
+  if(exit_dir == DIR_TO_PLAYER):
+    _score_manager.enemy_scored()
+  else:
+    _score_manager.player_scored()
+
+  var winner_type: int = _score_manager.get_winner()
+  ball_exited.emit(winner_type)
