@@ -13,7 +13,7 @@ signal reset_request()
 signal continue_request()
 signal pause_request()
 signal start_round_request()
-signal ball_exited(winner_type: int)
+signal ball_exited_request(winner_type: int)
 
 const GAME_MANAGER_SCN : PackedScene = preload("res://managers/game_manager/game_manager.tscn")
 
@@ -137,4 +137,4 @@ func on_ball_exited(ex_ball: Ball) -> void:
     _score_manager.player_scored()
 
   var winner_type: int = _score_manager.get_winner()
-  ball_exited.emit(winner_type)
+  ball_exited_request.emit(winner_type)
