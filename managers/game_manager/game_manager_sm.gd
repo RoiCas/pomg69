@@ -36,11 +36,11 @@ func update_state(new_state: GameState) -> void:
   match _current_state:
     GameState.WAIT_ROUND:
       get_tree().paused = false
-      _game_manager.show_pause_message()
+      _game_manager.hide_pause_message()
       _game_manager.start_round_counter()
     GameState.PLAY:
       get_tree().paused = false
-      _game_manager.hide_pause_message()
+      _game_manager.show_pause_message()
       _game_manager.round_start.emit()
     GameState.PAUSE:
       get_tree().paused = true
@@ -51,7 +51,7 @@ func update_state(new_state: GameState) -> void:
 
 
 func on_start_game() -> void:
-  update_state(GameState.WAIT_ROUND)
+  _game_manager.reset_game()
 
 
 func on_start_round() -> void:

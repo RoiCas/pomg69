@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhxs207u1q1q6"]
+[gd_scene load_steps=12 format=3 uid="uid://bhxs207u1q1q6"]
 
 [ext_resource type="Script" uid="uid://b2g1ucsuey8ld" path="res://managers/game_manager/game_manager.gd" id="1_lh1k3"]
 [ext_resource type="PackedScene" uid="uid://ccocan3mdcvgc" path="res://actors/player/player.tscn" id="2_dmudu"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cwlqlssgprck0" path="res://interface/end_message/end_message.tscn" id="8_qtb8k"]
 [ext_resource type="PackedScene" uid="uid://dlsy0p0gjm3ke" path="res://interface/pause_menu/pause_menu.tscn" id="9_53o11"]
 [ext_resource type="PackedScene" uid="uid://u5j2ew26ciyt" path="res://interface/pause_message/pause_message.tscn" id="10_vhlkh"]
-[ext_resource type="Script" uid="uid://pn024wxydirc" path="res://managers/game_manager/game_manager_sm.gd" id="11_a1swe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7s5u"]
 size = Vector2(1056, 800)
@@ -78,6 +77,3 @@ offset_left = -448.0
 offset_top = -320.0
 offset_right = -408.0
 offset_bottom = -280.0
-
-[node name="GameManagerSM" type="Node" parent="."]
-script = ExtResource("11_a1swe")

@@ -34,6 +34,10 @@ func show_message(state: END_STATE) -> void:
   visible = true
 
 
+func hide_message() -> void:
+  visible = false
+
+
 func on_exit_pressed() -> void:
   exit_request.emit()
 
