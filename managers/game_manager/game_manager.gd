@@ -6,11 +6,6 @@ signal round_end()
 signal game_end()
 signal exit_game_request()
 
-enum GameState {
-  WAIT_ROUND = 0,
-  PLAY = 1,
-}
-
 const GAME_MANAGER_SCN : PackedScene = preload("res://managers/game_manager/game_manager.tscn")
 
 static var game_manager : GameManager = null:
@@ -34,9 +29,6 @@ static func new_game_manager() -> GameManager:
   return new_instance
 
 
-var _current_state : GameState = GameState.WAIT_ROUND
-
-
 func _init() -> void:
   game_manager = self
 
@@ -48,14 +40,13 @@ func _ready() -> void:
 
 
 func connect_signals() -> void:
-  pass
   _round_start_counter.count_end.connect(on_count_end)
 
   _pause_message.pause_request.connect(on_pause_request)
 
-  #_pause_menu.restart_request.connect(on_restart_request)
-  #_pause_menu.exit_request.connect(on_exit_request)
-  #_pause_menu.continue_request.connect(on_continue_request)
+  _pause_menu.restart_request.connect(on_restart_request)
+  _pause_menu.exit_request.connect(on_exit_request)
+  _pause_menu.continue_request.connect(on_continue_request)
 
   _end_message.restart_request.connect(on_restart_request)
   _end_message.exit_request.connect(on_end_message_exit_request)
@@ -84,12 +75,18 @@ func on_restart_request() -> void:
   start_game()
 
 
+func on_exit_request() -> void:
+  get_tree().paused = false
+  exit_game_request.emit()
+
+
 func reset_game() -> void:
   round_end.emit()
   _score_manager.reset_score()
   _pause_menu.hide_menu()
   _end_message.hide_message()
   _pause_message.show_message()
+  get_tree().paused = false
 
 
 func on_pause_request() -> void:
@@ -97,6 +94,11 @@ func on_pause_request() -> void:
   get_tree().paused = true
   _pause_menu.show_menu()
 
+
+func on_continue_request() -> void:
+  _pause_menu.hide_menu()
+  get_tree().paused = false
+  _pause_message.show_message()
 
 
 func on_ball_exited(ext_ball: Ball) -> void:
@@ -113,14 +115,17 @@ func on_ball_exited(ext_ball: Ball) -> void:
     #Metió Player
     _score_manager.player_scored()
 
-  round_end.emit()
+
   var winner : int = _score_manager.get_winner()
   match winner:
     ScoreManager.WINNER_TYPE.PLAYER:
+      _pause_message.hide_message()
       _end_message.show_message(EndMessage.END_STATE.WIN)
       game_end.emit()
     ScoreManager.WINNER_TYPE.ENEMY:
+      _pause_message.hide_message()
       _end_message.show_message(EndMessage.END_STATE.LOSE)
       game_end.emit()
     ScoreManager.WINNER_TYPE.NONE:
-      start_round()
+      round_end.emit()
+      _round_start_counter.start_counter()
